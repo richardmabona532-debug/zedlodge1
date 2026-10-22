@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZedLodge | Comfortable Stays in Zambia</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f5f0;
+    color: #222;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.96);
+    border-bottom: 1px solid #ddd;
+}
+
+.nav {
+    max-width: 1150px;
+    margin: auto;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #174c3c;
+}
+
+.logo span {
+    color: #c49a45;
+}
+
+nav a {
+    text-decoration: none;
+    color: #222;
+    margin-left: 25px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #c49a45;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 90vh;
+    padding: 130px 25px 80px;
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.55),
+            rgba(0,0,0,.65)
+        ),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=80")
+        center/cover;
+}
+
+.hero-content {
+    max-width: 1100px;
+    width: 100%;
+    margin: auto;
+    color: white;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 80px);
+    max-width: 800px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 600px;
+    font-size: 19px;
+    color: #eee;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.primary {
+    background: #c49a45;
+    color: white;
+}
+
+.primary:hover {
+    background: #a77e32;
+}
+
+/* GENERAL */
+
+section {
+    padding: 90px 25px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 45px;
+    color: #174c3c;
+}
+
+/* ROOMS */
+
+.rooms {
+    background: white;
+}
+
+.room-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.room {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    transition: .3s;
+}
+
+.room:hover {
+    transform: translateY(-7px);
+}
+
+.room img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.room-info {
+    padding: 25px;
+}
+
+.room-info h3 {
+    font-size: 24px;
+    color: #174c3c;
+    margin-bottom: 10px;
+}
+
+.room-info p {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c49a45;
+    margin-bottom: 15px;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.available {
+    background: #dff5e8;
+    color: #19713d;
+}
+
+.reserved {
+    background: #fff1c7;
+    color: #876400;
+}
+
+.occupied {
+    background: #ffdede;
+    color: #a12626;
+}
+
+/* BOOKING */
+
+.booking {
+    background: #eef1ec;
+}
+
+.booking-box {
+    max-width: 750px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.08);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.total {
+    background: #174c3c;
+    color: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 7px;
+}
+
+.total strong {
+    font-size: 25px;
+}
+
+/* FEATURES */
+
+.features {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.feature {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.feature h3 {
+    margin-bottom: 8px;
+    color: #174c3c;
+}
+
+/* FOOTER */
+
+footer {
+    background: #12372d;
+    color: white;
+    padding: 35px 25px;
+    text-align: center;
+}
+
+footer span {
+    color: #c49a45;
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    nav {
+        display: none;
+    }
+
+    section {
+        padding: 70px 20px;
+    }
+
+    .hero {
+        min-height: 80vh;
+    }
+
+    .booking-box {
+        padding: 25px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+    <div class="logo">
+        ZED<span>LODGE</span>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#booking">Book</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+    <h1>
+        Your Comfortable Stay Starts Here.
+    </h1>
+
+    <p>
+        Relax, recharge and enjoy comfortable accommodation
+        with simple online booking.
+    </p>
+
+    <a href="#rooms" class="btn primary">
+        Explore Rooms
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- ROOMS -->
+
+<section class="rooms" id="rooms">
+
+<div class="container">
+
+<h2 class="section-title">
+    Our Rooms
+</h2>
+
+<div class="room-grid">
+
+    <div class="room">
+
+        <img
+        src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80"
+        alt="Standard room">
+
+        <div class="room-info">
+
+            <h3>Standard Room</h3>
+
+            <p>
+                Comfortable room perfect for short stays.
+            </p>
+
+            <div class="price">
+                K450 / night
+            </div>
+
+            <span class="status available">
+                ● Available
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="room">
+
+        <img
+        src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80"
+        alt="Deluxe room">
+
+        <div class="room-info">
+
+            <h3>Deluxe Room</h3>
+
+            <p>
+                Spacious room with upgraded comfort.
+            </p>
+
+            <div class="price">
+                K650 / night
+            </div>
+
+            <span class="status available">
+                ● Available
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="room">
+
+        <img
+        src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
+        alt="Executive suite">
+
+        <div class="room-info">
+
+            <h3>Executive Suite</h3>
+
+            <p>
+                Premium accommodation for guests who want extra space.
+            </p>
+
+            <div class="price">
+                K950 / night
+            </div>
+
+            <span class="status reserved">
+                ● Reserved
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section>
+
+<div class="container">
+
+<h2 class="section-title">
+    Why Stay With Us?
+</h2>
+
+<div class="features">
+
+    <div class="feature">
+        <div class="feature-icon">🛏️</div>
+        <h3>Comfortable Rooms</h3>
+        <p>
+            Clean and comfortable spaces designed for relaxing stays.
+        </p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">📶</div>
+        <h3>Free Wi-Fi</h3>
+        <p>
+            Stay connected throughout your visit.
+        </p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🚗</div>
+        <h3>Secure Parking</h3>
+        <p>
+            Convenient parking for our guests.
+        </p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>Safe & Secure</h3>
+        <p>
+            Your comfort and security are our priority.
+        </p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BOOKING -->
+
+<section class="booking" id="booking">
+
+<div class="container">
+
+<h2 class="section-title">
+    Book Your Stay
+</h2>
+
+<div class="booking-box">
+
+<form id="bookingForm">
+
+    <div class="form-group">
+
+        <label>
+            Full Name
+        </label>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+            required>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Phone Number
+        </label>
+
+        <input
+            type="tel"
+            id="phone"
+            placeholder="+260..."
+            required>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Choose Room
+        </label>
+
+        <select id="room" required>
+
+            <option value="">
+                Select a room
+            </option>
+
+            <option value="Standard Room" data-price="450">
+                Standard Room — K450/night
+            </option>
+
+            <option value="Deluxe Room" data-price="650">
+                Deluxe Room — K650/night
+            </option>
+
+            <option value="Executive Suite" data-price="950">
+                Executive Suite — K950/night
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Check-in
+        </label>
+
+        <input
+            type="date"
+            id="checkin"
+            required>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Check-out
+        </label>
+
+        <input
+            type="date"
+            id="checkout"
+            required>
+
+    </div>
+
+
+    <div class="total">
+
+        Estimated total:
+
+        <br>
+
+        <strong id="total">
+            K0
+        </strong>
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="btn primary">
+        Request Booking
+    </button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<div class="container">
+
+<h2 class="section-title">
+    Contact ZedLodge
+</h2>
+
+<p style="text-align:center;">
+    📞 +260 972 727 502
+    <br><br>
+    📍 Zambia
+</p>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+    © 2026 <span>ZedLodge</span>. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<script>
+
+const roomSelect =
+document.getElementById("room");
+
+const checkin =
+document.getElementById("checkin");
+
+const checkout =
+document.getElementById("checkout");
+
+const total =
+document.getElementById("total");
+
+function calculateTotal() {
+
+    const selected =
+    roomSelect.options[roomSelect.selectedIndex];
+
+    const price =
+    Number(selected.dataset.price || 0);
+
+    const start =
+    new Date(checkin.value);
+
+    const end =
+    new Date(checkout.value);
+
+    if (
+        price &&
+        checkin.value &&
+        checkout.value &&
+        end > start
+    ) {
+
+        const milliseconds =
+        end - start;
+
+        const nights =
+        Math.ceil(
+            milliseconds /
+            (1000 * 60 * 60 * 24)
+        );
+
+        total.textContent =
+        "K" + (price * nights).toLocaleString();
+
+    } else {
+
+        total.textContent = "K0";
+
+    }
+
+}
+
+roomSelect.addEventListener(
+    "change",
+    calculateTotal
+);
+
+checkin.addEventListener(
+    "change",
+    calculateTotal
+);
+
+checkout.addEventListener(
+    "change",
+    calculateTotal
+);
+
+
+document
+.getElementById("bookingForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name =
+    document.getElementById("name").value;
+
+    const phone =
+    document.getElementById("phone").value;
+
+    const room =
+    roomSelect.value;
+
+    const arrival =
+    checkin.value;
+
+    const departure =
+    checkout.value;
+
+    const message =
+    `Hello ZedLodge!
+
+I would like to request a booking.
+
+Name: ${name}
+Phone: ${phone}
+Room: ${room}
+Check-in: ${arrival}
+Check-out: ${departure}
+Estimated total: ${total.textContent}`;
+
+    const whatsapp =
+    "https://wa.me/260972727502?text="
+    + encodeURIComponent(message);
+
+    window.open(
+        whatsapp,
+        "_blank"
+    );
+
+});
+
+</script>
+
+</body>
+</html>
