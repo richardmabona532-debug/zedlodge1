@@ -807,5 +807,99 @@ Estimated total: ${total.textContent}`;
 
 </script>
 
-</body>
+<script>
+const bookingForm = document.getElementById("bookingForm");
+
+if (bookingForm) {
+
+    bookingForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const guestName = document.getElementById("guestName").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const roomType = document.getElementById("room").value;
+        const checkIn = document.getElementById("checkIn").value;
+        const checkOut = document.getElementById("checkOut").value;
+
+        if (!guestName || !phone || !roomType || !checkIn || !checkOut) {
+            alert("Please fill in all the required fields.");
+            return;
+        }
+
+        if (new Date(checkOut) <= new Date(checkIn)) {
+            alert("Check-out date must be after check-in date.");
+            return;
+        }
+
+        try {
+
+            // Find an available room of the selected type
+            const { data: rooms, error: roomError } = await supabase
+                .from("rooms")
+                .select("id, room_number, room_type, price")
+                .eq("room_type", roomType)
+                .eq("status", "available")
+                .limit(1);
+
+            if (roomError) {
+                console.error(roomError);
+                alert("Could not check room availability.");
+                return;
+            }
+
+            if (!rooms || rooms.length === 0) {
+                alert("Sorry, there are currently no available rooms of this type.");
+                return;
+            }
+
+            const room = rooms[0];
+
+            // Calculate number of nights
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+
+            const nights = Math.ceil(
+                (end - start) / (1000 * 60 * 60 * 24)
+            );
+
+            const total = nights * Number(room.price);
+
+            // Save booking to Supabase
+            const { data, error } = await supabase
+                .from("bookings")
+                .insert([
+                    {
+                        guest_name: guestName,
+                        phone: phone,
+                        room_id: room.id,
+                        check_in: checkIn,
+                        check_out: checkOut,
+                        total: total,
+                        status: "pending"
+                    }
+                ])
+                .select();
+
+            if (error) {
+                console.error(error);
+                alert("Booking failed. Please try again.");
+                return;
+            }
+
+            alert(
+                "Booking successful!\\n\\n" +
+                "Room: " + room.room_number + "\\n" +
+                "Nights: " + nights + "\\n" +
+                "Total: K" + total
+            );
+
+            bookingForm.reset();
+
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong. Please try again.");
+        }
+    });
+}
+</script></body>
 </html>
