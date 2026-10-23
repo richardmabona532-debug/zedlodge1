@@ -458,7 +458,7 @@ button:hover {
 </main>
 <script>
 const SUPABASE_URL = "https://tkwypycumahtmbzaqrtv.supabase.co";
-const SUPABASE_KEY = "YOUR_PUBLISHABLE_KEY";
+const SUPABASE_KEY = "PASTE_THE_SAME_PUBLISHABLE_KEY_FROM_INDEX.HTML_HERE";
 
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
@@ -472,11 +472,40 @@ async function loadBookings() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error(error);
+    console.error("Booking error:", error);
+    alert("Could not load bookings: " + error.message);
     return;
   }
 
-  console.log("Bookings:", data);
+  console.log("Bookings loaded:", data);
+
+  const bookingsBody = document.getElementById("bookingsBody");
+
+  if (!bookingsBody) {
+    console.error("bookingsBody was not found.");
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    bookingsBody.innerHTML = `
+      <tr>
+        <td colspan="7">No bookings yet.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  bookingsBody.innerHTML = data.map(booking => `
+    <tr>
+      <td>${booking.guest_name || "—"}</td>
+      <td>${booking.phone || "—"}</td>
+      <td>${booking.room_id || "—"}</td>
+      <td>${booking.check_in || "—"}</td>
+      <td>${booking.check_out || "—"}</td>
+      <td>K${booking.total || 0}</td>
+      <td>${booking.status || "pending"}</td>
+    </tr>
+  `).join("");
 }
 
 loadBookings();
