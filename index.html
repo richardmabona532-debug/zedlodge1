@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Urban Lodge | Comfortable Stay in Zambia</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: #222;
+      background: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #173b2d;
+    }
+
+    .logo span {
+      color: #c9962d;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #c9962d;
+    }
+
+    .menu-btn {
+      display: none;
+      border: none;
+      background: none;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.5),
+          rgba(0,0,0,0.5)
+        ),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 22px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: #c9962d;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #173b2d;
+      color: white;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 2.7rem;
+      color: #173b2d;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #666;
+    }
+
+    /* ABOUT */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .about-image {
+      height: 420px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .about-text h3 {
+      color: #173b2d;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .about-text p {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    /* ROOMS */
+
+    .rooms {
+      background: #f7f7f5;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .room-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .room-image {
+      height: 210px;
+    }
+
+    .room-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .room-content h3 {
+      color: #173b2d;
+      margin-bottom: 8px;
+    }
+
+    .room-content p {
+      color: #666;
+      margin-bottom: 15px;
+      flex: 1;
+    }
+
+    .price {
+      color: #c08018;
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    /* FEATURES */
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 30px 20px;
+      border: 1px solid #eee;
+      border-radius: 14px;
+    }
+
+    .feature-icon {
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h3 {
+      color: #173b2d;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: #666;
+    }
+
+    /* GALLERY */
+
+    .gallery {
+      background: #f7f7f5;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .gallery-item {
+      height: 240px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* BOOKING */
+
+    .booking-wrap {
+      max-width: 780px;
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .booking-form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d5d5d5;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #173b2d;
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .total-box {
+      padding: 15px;
+      background: #f4f1e9;
+      color: #173b2d;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .form-message {
+      min-height: 22px;
+      color: #b42318;
+      font-weight: bold;
+    }
+
+    .confirmation {
+      display: none;
+      text-align: center;
+    }
+
+    .confirmation-icon {
+      font-size: 3rem;
+    }
+
+    .confirmation h3 {
+      color: #173b2d;
+      font-size: 1.8rem;
+      margin: 10px 0;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      background: #173b2d;
+      color: white;
+    }
+
+    .contact .section-title h2,
+    .contact .section-title p {
+      color: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .contact-card {
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .contact-card a {
+      color: #f0cf79;
+      font-weight: bold;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #10291f;
+      color: #ddd;
+      text-align: center;
+      padding: 25px 0;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 950px) {
+
+      .room-grid,
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: white;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links li a {
+        display: block;
+        padding: 15px 4%;
+        border-bottom: 1px solid #eee;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .room-grid,
+      .feature-grid,
+      .gallery-grid,
+      .contact-grid,
+      .date-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-wrap {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a class="logo" href="#home">
+      Urban <span>Lodge</span>
+    </a>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      type="button"
+      aria-label="Open menu"
+    >
+      ☰
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#rooms">Rooms</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#booking">Book</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <h1>
+      Comfort. Style. Your Home Away From Home.
+    </h1>
+
+    <p>
+      Welcome to Urban Lodge — comfortable, clean and affordable
+      accommodation for business trips, holidays and everyday stays.
+    </p>
+
+    <a class="btn btn-primary" href="#booking">
+      Book a Room
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <h2>About Urban Lodge</h2>
+
+      <p>
+        Simple comfort, friendly service and a relaxing place to stay.
+      </p>
+
+    </div>
+
+    <div class="about-grid">
+
+      <div class="about-image">
+
+        <img
+          src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80"
+          alt="Comfortable hotel room"
+        >
+
+      </div>
+
+      <div class="about-text">
+
+        <h3>
+          A Comfortable Stay at an Affordable Price
+        </h3>
+
+        <p>
+          Urban Lodge provides comfortable accommodation for guests
+          looking for a convenient and welcoming place to stay.
+        </p>
+
+        <p>
+          Whether you are travelling for work, visiting family or
+          simply taking a break, our rooms are designed to give you
+          a clean and comfortable experience.
+        </p>
+
+        <a class="btn btn-secondary" href="#rooms">
+          View Our Rooms
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ROOMS -->
+
+<section class="rooms" id="rooms">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <h2>Our Rooms</h2>
+
+      <p>
+        Choose the room that suits your needs and budget.
+      </p>
+
+    </div>
+
+    <div class="room-grid">
+
+      <article class="room-card">
+
+        <div class="room-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80"
+            alt="Super Executive Room"
+          >
+
+        </div>
+
+        <div class="room-content">
+
+          <h3>
+            Super Executive Room
+          </h3>
+
+          <p>
+            Spacious and comfortable accommodation for guests
+            who want extra comfort.
+          </p>
+
+          <div class="price">
+            K450 / night
+          </div>
+
+          <button
+            class="btn btn-secondary room-book-btn"
+            data-room="Super Executive Room"
+            type="button"
+          >
+            Book This Room
+          </button>
+
+        </div>
+
+      </article>
+
+      <article class="room-card">
+
+        <div class="room-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=1000&q=80"
+            alt="Executive Double Room"
+          >
+
+        </div>
+
+        <div class="room-content">
+
+          <h3>
+            Executive Double Room
+          </h3>
+
+          <p>
+            A comfortable double room suitable for couples,
+            friends or business travellers.
+          </p>
+
+          <div class="price">
+            K350 / night
+          </div>
+
+          <button
+            class="btn btn-secondary room-book-btn"
+            data-room="Executive Double Room"
+            type="button"
+          >
+            Book This Room
+          </button>
+
+        </div>
+
+      </article>
+
+      <article class="room-card">
+
+        <div class="room-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=80"
+            alt="Standard Double Room"
+          >
+
+        </div>
+
+        <div class="room-content">
+
+          <h3>
+            Standard Double Room
+          </h3>
+
+          <p>
+            A practical and comfortable room for an affordable stay.
+          </p>
+
+          <div class="price">
+            K250 / night
+          </div>
+
+          <button
+            class="btn btn-secondary room-book-btn"
+            data-room="Standard Double Room"
+            type="button"
+          >
+            Book This Room
+          </button>
+
+        </div>
+
+      </article>
+
+      <article class="room-card">
+
+        <div class="room-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80"
+            alt="Twin Double Room"
+          >
+
+        </div>
+
+        <div class="room-content">
+
+          <h3>
+            Twin Double Room
+          </h3>
+
+          <p>
+            A convenient room option with comfortable sleeping arrangements.
+          </p>
+
+          <div class="price">
+            K200 / night
+          </div>
+
+          <button
+            class="btn btn-secondary room-book-btn"
+            data-room="Twin Double Room"
+            type="button"
+          >
+            Book This Room
+          </button>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+  </section>
