@@ -456,6 +456,30 @@ button:hover {
     </button>
 
 </main>
+<script>
+const SUPABASE_URL = "https://tkwypycumahtmbzaqrtv.supabase.co";
+const SUPABASE_KEY = "YOUR_PUBLISHABLE_KEY";
 
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadBookings() {
+  const { data, error } = await supabaseClient
+    .from("bookings")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  console.log("Bookings:", data);
+}
+
+loadBookings();
+</script>
 </body>
 </html>
