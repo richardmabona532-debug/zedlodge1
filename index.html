@@ -379,8 +379,24 @@ footer span {
 @media(max-width:650px) {
 
     nav {
-        display: none;
-    }
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: #171717;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+}
+
+nav.active {
+    display: flex;
+    flex-direction: column;
+}
+
+nav a {
+    margin: 10px 0;
+}
 
     section {
         padding: 70px 20px;
