@@ -1,246 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "https://tkwypycumahtmbzaqrtv.supabase.co";
-const SUPABASE_KEY = "sb_publishable_yndmKJLn7rPZEpVdMuA1Og_UDRU_pE6";
-
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-</script>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZedLodge | Comfortable Stays in Zambia</title>
+<title>Urban Lodge | Lusaka</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     scroll-behavior: smooth;
 }
 
 body {
     font-family: Arial, sans-serif;
-    background: #f7f5f0;
-    color: #222;
+    background: #f7f4ed;
+    color: #1c1c1c;
+    line-height: 1.6;
 }
 
 header {
     position: fixed;
-    width: 100%;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    background: rgba(255,255,255,.96);
-    border-bottom: 1px solid #ddd;
+    background: rgba(15, 15, 15, 0.96);
+    padding: 16px 6%;
 }
 
 .nav {
-    max-width: 1150px;
+    max-width: 1200px;
     margin: auto;
-    padding: 18px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    font-size: 25px;
-    font-weight: 900;
-    color: #174c3c;
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .logo span {
-    color: #c49a45;
+    color: #c9a45c;
 }
 
 nav a {
+    color: white;
     text-decoration: none;
-    color: #222;
     margin-left: 25px;
-    font-weight: bold;
     font-size: 14px;
 }
 
 nav a:hover {
-    color: #c49a45;
+    color: #c9a45c;
 }
 
 /* HERO */
 
 .hero {
-    min-height: 90vh;
-    padding: 130px 25px 80px;
+    min-height: 100vh;
     display: flex;
     align-items: center;
+    padding: 120px 6% 70px;
 
     background:
-        linear-gradient(
-            rgba(0,0,0,.55),
-            rgba(0,0,0,.65)
-        ),
-        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=80")
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.65)),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=85")
         center/cover;
 }
 
 .hero-content {
-    max-width: 1100px;
-    width: 100%;
-    margin: auto;
+    max-width: 750px;
     color: white;
 }
 
+.hero small {
+    color: #d7b76f;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
 .hero h1 {
-    font-size: clamp(45px, 7vw, 80px);
-    max-width: 800px;
-    line-height: 1.05;
-    margin-bottom: 20px;
+    font-size: clamp(45px, 8vw, 82px);
+    line-height: 1;
+    margin: 18px 0;
 }
 
 .hero p {
-    max-width: 600px;
     font-size: 19px;
+    max-width: 600px;
     color: #eee;
-    margin-bottom: 30px;
 }
 
 .btn {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 14px 24px;
+    margin-top: 28px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    border: none;
-    cursor: pointer;
 }
 
-.primary {
-    background: #c49a45;
+.btn-primary {
+    background: #c9a45c;
     color: white;
 }
 
-.primary:hover {
-    background: #a77e32;
+.btn-primary:hover {
+    background: #a88748;
 }
 
 /* GENERAL */
 
 section {
-    padding: 90px 25px;
+    padding: 90px 6%;
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1150px;
     margin: auto;
 }
 
 .section-title {
     text-align: center;
-    font-size: 42px;
     margin-bottom: 45px;
-    color: #174c3c;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    color: #171717;
+}
+
+.section-title p {
+    color: #777;
+    margin-top: 8px;
+}
+
+/* ABOUT */
+
+.about {
+    background: white;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.about-image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.about h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    color: #666;
+    margin-bottom: 15px;
 }
 
 /* ROOMS */
 
 .rooms {
-    background: white;
+    background: #f7f4ed;
 }
 
 .room-grid {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .room {
-    background: #fff;
-    border-radius: 10px;
+    background: white;
+    border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #ddd;
-    box-shadow: 0 5px 20px rgba(0,0,0,.07);
-    transition: .3s;
-}
-
-.room:hover {
-    transform: translateY(-7px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
 }
 
 .room img {
     width: 100%;
-    height: 220px;
+    height: 230px;
     object-fit: cover;
 }
 
 .room-info {
-    padding: 25px;
+    padding: 22px;
 }
 
 .room-info h3 {
-    font-size: 24px;
-    color: #174c3c;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .room-info p {
-    color: #666;
-    margin-bottom: 15px;
+    color: #777;
+    font-size: 14px;
+    min-height: 45px;
 }
 
 .price {
-    font-size: 24px;
+    color: #b08a42;
+    font-size: 22px;
     font-weight: bold;
-    color: #c49a45;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
-.status {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 15px;
+/* FEATURES */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-.available {
-    background: #dff5e8;
-    color: #19713d;
+.feature {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
 }
 
-.reserved {
-    background: #fff1c7;
-    color: #876400;
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
 }
 
-.occupied {
-    background: #ffdede;
-    color: #a12626;
+/* GALLERY */
+
+.gallery {
+    background: white;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 6px;
 }
 
 /* BOOKING */
 
 .booking {
-    background: #eef1ec;
+    background: #171717;
+    color: white;
 }
 
 .booking-box {
     max-width: 750px;
     margin: auto;
     background: white;
+    color: #222;
     padding: 35px;
-    border-radius: 12px;
-    box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    border-radius: 10px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 label {
@@ -259,60 +295,88 @@ select {
 }
 
 .total {
-    background: #174c3c;
+    background: #171717;
     color: white;
-    padding: 20px;
+    padding: 18px;
+    border-radius: 6px;
     margin: 20px 0;
-    border-radius: 7px;
 }
 
 .total strong {
-    font-size: 25px;
+    color: #d7b76f;
+    font-size: 24px;
 }
 
-/* FEATURES */
+button {
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
 
-.features {
+/* CONTACT */
+
+.contact {
+    background: #f7f4ed;
+}
+
+.contact-grid {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-.feature {
+.contact-card {
     background: white;
     padding: 30px;
     text-align: center;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-.feature-icon {
-    font-size: 35px;
-    margin-bottom: 15px;
+.contact-card h3 {
+    margin-bottom: 10px;
 }
 
-.feature h3 {
-    margin-bottom: 8px;
-    color: #174c3c;
+.contact-card a {
+    color: #b08a42;
+    text-decoration: none;
 }
 
 /* FOOTER */
 
 footer {
-    background: #12372d;
+    background: #101010;
     color: white;
-    padding: 35px 25px;
     text-align: center;
+    padding: 30px;
 }
 
 footer span {
-    color: #c49a45;
+    color: #c9a45c;
 }
 
 /* MOBILE */
 
-@media(max-width:700px) {
+@media(max-width:900px) {
+
+    .room-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features,
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:650px) {
 
     nav {
         display: none;
@@ -323,37 +387,47 @@ footer span {
     }
 
     .hero {
-        min-height: 80vh;
+        min-height: 85vh;
+    }
+
+    .room-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid img {
+        height: 300px;
     }
 
     .booking-box {
         padding: 25px;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
 <div class="nav">
 
     <div class="logo">
-        ZED<span>LODGE</span>
+        URBAN<span>LODGE</span>
     </div>
 
     <nav>
         <a href="#home">Home</a>
+        <a href="#about">About</a>
         <a href="#rooms">Rooms</a>
+        <a href="#gallery">Gallery</a>
         <a href="#booking">Book</a>
         <a href="#contact">Contact</a>
     </nav>
 
 </div>
-
 </header>
 
 
@@ -363,18 +437,66 @@ footer span {
 
 <div class="hero-content">
 
+    <small>WELCOME TO URBAN LODGE</small>
+
     <h1>
-        Your Comfortable Stay Starts Here.
+        A Comfortable Stay in Lusaka.
     </h1>
 
     <p>
-        Relax, recharge and enjoy comfortable accommodation
-        with simple online booking.
+        Relax, stay comfortable and enjoy a welcoming lodge
+        experience in Lusaka, Zambia.
     </p>
 
-    <a href="#rooms" class="btn primary">
-        Explore Rooms
+    <a href="#booking" class="btn btn-primary">
+        Book Your Stay
     </a>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+<div class="container">
+
+<div class="about-grid">
+
+    <img
+        class="about-image"
+        src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85"
+        alt="Urban Lodge">
+
+    <div>
+
+        <h2>
+            Welcome to Urban Lodge
+        </h2>
+
+        <p>
+            Urban Lodge offers a comfortable place to stay
+            for guests visiting Lusaka.
+        </p>
+
+        <p>
+            Whether you are visiting for business, events or
+            a short stay, our goal is to provide a welcoming
+            and convenient experience.
+        </p>
+
+        <a
+            class="btn btn-primary"
+            href="https://maps.app.goo.gl/BJLLvNebmmdBikiE8"
+            target="_blank">
+            View Location
+        </a>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -387,33 +509,37 @@ footer span {
 
 <div class="container">
 
-<h2 class="section-title">
-    Our Rooms
-</h2>
+<div class="section-title">
+    <h2>Rooms & Rates</h2>
+    <p>Choose the room that suits your stay.</p>
+</div>
 
 <div class="room-grid">
 
     <div class="room">
 
         <img
-        src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80"
-        alt="Standard room">
+            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=85"
+            alt="Super Executive Room">
 
         <div class="room-info">
 
-            <h3>Standard Room</h3>
+            <h3>Super Executive Room</h3>
 
             <p>
-                Comfortable room perfect for short stays.
+                A premium room option for guests looking
+                for additional comfort.
             </p>
 
             <div class="price">
                 K450 / night
             </div>
 
-            <span class="status available">
-                ● Available
-            </span>
+            <a
+                href="#booking"
+                class="btn btn-primary">
+                Book Room
+            </a>
 
         </div>
 
@@ -423,24 +549,27 @@ footer span {
     <div class="room">
 
         <img
-        src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80"
-        alt="Deluxe room">
+            src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=85"
+            alt="Executive Double Room">
 
         <div class="room-info">
 
-            <h3>Deluxe Room</h3>
+            <h3>Executive Double</h3>
 
             <p>
-                Spacious room with upgraded comfort.
+                A comfortable option for guests travelling
+                alone or together.
             </p>
 
             <div class="price">
-                K650 / night
+                K350 / night
             </div>
 
-            <span class="status available">
-                ● Available
-            </span>
+            <a
+                href="#booking"
+                class="btn btn-primary">
+                Book Room
+            </a>
 
         </div>
 
@@ -450,24 +579,56 @@ footer span {
     <div class="room">
 
         <img
-        src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80"
-        alt="Executive suite">
+            src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=85"
+            alt="Standard Double Room">
 
         <div class="room-info">
 
-            <h3>Executive Suite</h3>
+            <h3>Standard Double</h3>
 
             <p>
-                Premium accommodation for guests who want extra space.
+                A simple and comfortable choice for your stay.
             </p>
 
             <div class="price">
-                K950 / night
+                K250 / night
             </div>
 
-            <span class="status reserved">
-                ● Reserved
-            </span>
+            <a
+                href="#booking"
+                class="btn btn-primary">
+                Book Room
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="room">
+
+        <img
+            src="https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=900&q=85"
+            alt="Twin Double Room">
+
+        <div class="room-info">
+
+            <h3>Twin Double</h3>
+
+            <p>
+                A practical room option for guests sharing
+                accommodation.
+            </p>
+
+            <div class="price">
+                K200 / night
+            </div>
+
+            <a
+                href="#booking"
+                class="btn btn-primary">
+                Book Room
+            </a>
 
         </div>
 
@@ -486,43 +647,71 @@ footer span {
 
 <div class="container">
 
-<h2 class="section-title">
-    Why Stay With Us?
-</h2>
+<div class="section-title">
+    <h2>Why Choose Urban Lodge?</h2>
+</div>
 
 <div class="features">
 
     <div class="feature">
         <div class="feature-icon">🛏️</div>
-        <h3>Comfortable Rooms</h3>
+        <h3>Comfortable Stay</h3>
         <p>
-            Clean and comfortable spaces designed for relaxing stays.
+            A welcoming environment for your stay in Lusaka.
         </p>
     </div>
 
     <div class="feature">
-        <div class="feature-icon">📶</div>
-        <h3>Free Wi-Fi</h3>
+        <div class="feature-icon">📍</div>
+        <h3>Convenient Location</h3>
         <p>
-            Stay connected throughout your visit.
+            Easily find us using Google Maps.
         </p>
     </div>
 
     <div class="feature">
-        <div class="feature-icon">🚗</div>
-        <h3>Secure Parking</h3>
+        <div class="feature-icon">📅</div>
+        <h3>Easy Booking</h3>
         <p>
-            Convenient parking for our guests.
+            Request your room directly through our website.
         </p>
     </div>
 
-    <div class="feature">
-        <div class="feature-icon">🔒</div>
-        <h3>Safe & Secure</h3>
-        <p>
-            Your comfort and security are our priority.
-        </p>
-    </div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GALLERY -->
+
+<section class="gallery" id="gallery">
+
+<div class="container">
+
+<div class="section-title">
+    <h2>Explore Urban Lodge</h2>
+    <p>Photos from the lodge.</p>
+</div>
+
+<div class="gallery-grid">
+
+    <img
+        src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=85"
+        alt="Urban Lodge">
+
+    <img
+        src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=85"
+        alt="Urban Lodge room">
+
+    <img
+        src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=85"
+        alt="Hotel interior">
+
+    <img
+        src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=85"
+        alt="Dining">
 
 </div>
 
@@ -537,9 +726,15 @@ footer span {
 
 <div class="container">
 
-<h2 class="section-title">
-    Book Your Stay
-</h2>
+<div class="section-title">
+    <h2 style="color:white;">
+        Book Your Stay
+    </h2>
+
+    <p style="color:#bbb;">
+        Send us your booking request.
+    </p>
+</div>
 
 <div class="booking-box">
 
@@ -547,14 +742,14 @@ footer span {
 
     <div class="form-group">
 
-        <label>
+        <label for="guestName">
             Full Name
         </label>
 
         <input
+            id="guestName"
             type="text"
-            id="name"
-            placeholder="Enter your name"
+            placeholder="Your full name"
             required>
 
     </div>
@@ -562,13 +757,13 @@ footer span {
 
     <div class="form-group">
 
-        <label>
+        <label for="phone">
             Phone Number
         </label>
 
         <input
-            type="tel"
             id="phone"
+            type="tel"
             placeholder="+260..."
             required>
 
@@ -577,8 +772,8 @@ footer span {
 
     <div class="form-group">
 
-        <label>
-            Choose Room
+        <label for="room">
+            Room Type
         </label>
 
         <select id="room" required>
@@ -587,16 +782,20 @@ footer span {
                 Select a room
             </option>
 
-            <option value="Standard Room" data-price="450">
-                Standard Room — K450/night
+            <option value="Super Executive Room">
+                Super Executive Room — K450/night
             </option>
 
-            <option value="Deluxe Room" data-price="650">
-                Deluxe Room — K650/night
+            <option value="Executive Double">
+                Executive Double — K350/night
             </option>
 
-            <option value="Executive Suite" data-price="950">
-                Executive Suite — K950/night
+            <option value="Standard Double">
+                Standard Double — K250/night
+            </option>
+
+            <option value="Twin Double">
+                Twin Double — K200/night
             </option>
 
         </select>
@@ -606,13 +805,13 @@ footer span {
 
     <div class="form-group">
 
-        <label>
+        <label for="checkIn">
             Check-in
         </label>
 
         <input
+            id="checkIn"
             type="date"
-            id="checkin"
             required>
 
     </div>
@@ -620,13 +819,13 @@ footer span {
 
     <div class="form-group">
 
-        <label>
+        <label for="checkOut">
             Check-out
         </label>
 
         <input
+            id="checkOut"
             type="date"
-            id="checkout"
             required>
 
     </div>
@@ -647,8 +846,10 @@ footer span {
 
     <button
         type="submit"
-        class="btn primary">
+        class="btn btn-primary">
+
         Request Booking
+
     </button>
 
 </form>
@@ -662,19 +863,65 @@ footer span {
 
 <!-- CONTACT -->
 
-<section id="contact">
+<section class="contact" id="contact">
 
 <div class="container">
 
-<h2 class="section-title">
-    Contact ZedLodge
-</h2>
+<div class="section-title">
 
-<p style="text-align:center;">
-    📞 +260 972 727 502
-    <br><br>
-    📍 Zambia
-</p>
+    <h2>Contact Urban Lodge</h2>
+
+    <p>
+        Get in touch or find us on Google Maps.
+    </p>
+
+</div>
+
+<div class="contact-grid">
+
+    <div class="contact-card">
+
+        <h3>📍 Location</h3>
+
+        <p>Lusaka, Zambia</p>
+
+        <a
+            href="https://maps.app.goo.gl/BJLLvNebmmdBikiE8"
+            target="_blank">
+
+            Open Google Maps
+
+        </a>
+
+    </div>
+
+
+    <div class="contact-card">
+
+        <h3>📞 Phone</h3>
+
+        <p>
+            Contact Urban Lodge
+        </p>
+
+        <p>
+            Phone number to be added
+        </p>
+
+    </div>
+
+
+    <div class="contact-card">
+
+        <h3>📅 Events</h3>
+
+        <p>
+            Conference and event enquiries
+        </p>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -684,7 +931,8 @@ footer span {
 <footer>
 
 <p>
-    © 2026 <span>ZedLodge</span>. All Rights Reserved.
+    © 2026 <span>Urban Lodge</span>.
+    All Rights Reserved.
 </p>
 
 </footer>
@@ -692,70 +940,84 @@ footer span {
 
 <script>
 
+const SUPABASE_URL =
+"https://tkwypycumahtmbzaqrtv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_yndmKJLn7rPZEpVdMuA1Og_UDRU_pE6";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
 const roomSelect =
 document.getElementById("room");
 
-const checkin =
-document.getElementById("checkin");
+const checkIn =
+document.getElementById("checkIn");
 
-const checkout =
-document.getElementById("checkout");
+const checkOut =
+document.getElementById("checkOut");
 
 const total =
 document.getElementById("total");
 
+
+const prices = {
+    "Super Executive Room": 450,
+    "Executive Double": 350,
+    "Standard Double": 250,
+    "Twin Double": 200
+};
+
+
 function calculateTotal() {
 
-    const selected =
-    roomSelect.options[roomSelect.selectedIndex];
-
-    const price =
-    Number(selected.dataset.price || 0);
+    const room =
+    roomSelect.value;
 
     const start =
-    new Date(checkin.value);
+    new Date(checkIn.value);
 
     const end =
-    new Date(checkout.value);
+    new Date(checkOut.value);
 
     if (
-        price &&
-        checkin.value &&
-        checkout.value &&
-        end > start
+        !room ||
+        !checkIn.value ||
+        !checkOut.value ||
+        end <= start
     ) {
-
-        const milliseconds =
-        end - start;
-
-        const nights =
-        Math.ceil(
-            milliseconds /
-            (1000 * 60 * 60 * 24)
-        );
-
-        total.textContent =
-        "K" + (price * nights).toLocaleString();
-
-    } else {
-
         total.textContent = "K0";
-
+        return;
     }
 
+    const nights =
+    Math.ceil(
+        (end - start) /
+        (1000 * 60 * 60 * 24)
+    );
+
+    total.textContent =
+    "K" +
+    (prices[room] * nights).toLocaleString();
 }
+
 
 roomSelect.addEventListener(
     "change",
     calculateTotal
 );
 
-checkin.addEventListener(
+checkIn.addEventListener(
     "change",
     calculateTotal
 );
 
-checkout.addEventListener(
+checkOut.addEventListener(
     "change",
     calculateTotal
 );
@@ -763,143 +1025,164 @@ checkout.addEventListener(
 
 document
 .getElementById("bookingForm")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    const name =
-    document.getElementById("name").value;
+    const guestName =
+    document.getElementById("guestName").value.trim();
 
     const phone =
-    document.getElementById("phone").value;
+    document.getElementById("phone").value.trim();
 
-    const room =
+    const roomType =
     roomSelect.value;
 
     const arrival =
-    checkin.value;
+    checkIn.value;
 
     const departure =
-    checkout.value;
+    checkOut.value;
 
-    const message =
-    `Hello ZedLodge!
 
-I would like to request a booking.
+    if (
+        !guestName ||
+        !phone ||
+        !roomType ||
+        !arrival ||
+        !departure
+    ) {
+        alert("Please complete all fields.");
+        return;
+    }
 
-Name: ${name}
-Phone: ${phone}
-Room: ${room}
-Check-in: ${arrival}
-Check-out: ${departure}
-Estimated total: ${total.textContent}`;
 
-    const whatsapp =
-    "https://wa.me/260972727502?text="
-    + encodeURIComponent(message);
+    if (
+        new Date(departure) <=
+        new Date(arrival)
+    ) {
+        alert(
+            "Check-out must be after check-in."
+        );
+        return;
+    }
 
-    window.open(
-        whatsapp,
-        "_blank"
+
+    const nights =
+    Math.ceil(
+        (
+            new Date(departure) -
+            new Date(arrival)
+        ) /
+        (1000 * 60 * 60 * 24)
     );
+
+
+    const estimatedTotal =
+    prices[roomType] * nights;
+
+
+    try {
+
+        const { data: rooms, error } =
+        await supabaseClient
+        .from("rooms")
+        .select(
+            "id, room_number, room_type, price"
+        )
+        .eq("room_type", roomType)
+        .eq("status", "available")
+        .limit(1);
+
+
+        if (error) {
+            console.error(error);
+
+            alert(
+                "We could not check availability. Please try again."
+            );
+
+            return;
+        }
+
+
+        if (!rooms || rooms.length === 0) {
+
+            alert(
+                "Sorry, this room type is currently unavailable."
+            );
+
+            return;
+        }
+
+
+        const room = rooms[0];
+
+
+        const { error: bookingError } =
+        await supabaseClient
+        .from("bookings")
+        .insert([{
+
+            guest_name: guestName,
+
+            phone: phone,
+
+            room_id: room.id,
+
+            check_in: arrival,
+
+            check_out: departure,
+
+            total: estimatedTotal,
+
+            status: "pending"
+
+        }]);
+
+
+        if (bookingError) {
+
+            console.error(bookingError);
+
+            alert(
+                "The booking could not be submitted. Please try again."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Booking request received!\n\n" +
+            "Room: " + roomType + "\n" +
+            "Check-in: " + arrival + "\n" +
+            "Check-out: " + departure + "\n" +
+            "Estimated total: K" +
+            estimatedTotal.toLocaleString()
+        );
+
+
+        document
+        .getElementById("bookingForm")
+        .reset();
+
+        total.textContent = "K0";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong. Please try again."
+        );
+
+    }
 
 });
 
 </script>
 
-<script>
-const bookingForm = document.getElementById("bookingForm");
-
-if (bookingForm) {
-
-    bookingForm.addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        const guestName = document.getElementById("guestName").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const roomType = document.getElementById("room").value;
-        const checkIn = document.getElementById("checkIn").value;
-        const checkOut = document.getElementById("checkOut").value;
-
-        if (!guestName || !phone || !roomType || !checkIn || !checkOut) {
-            alert("Please fill in all the required fields.");
-            return;
-        }
-
-        if (new Date(checkOut) <= new Date(checkIn)) {
-            alert("Check-out date must be after check-in date.");
-            return;
-        }
-
-        try {
-
-            // Find an available room of the selected type
-            const { data: rooms, error: roomError } = await supabase
-                .from("rooms")
-                .select("id, room_number, room_type, price")
-                .eq("room_type", roomType)
-                .eq("status", "available")
-                .limit(1);
-
-            if (roomError) {
-                console.error(roomError);
-                alert("Could not check room availability.");
-                return;
-            }
-
-            if (!rooms || rooms.length === 0) {
-                alert("Sorry, there are currently no available rooms of this type.");
-                return;
-            }
-
-            const room = rooms[0];
-
-            // Calculate number of nights
-            const start = new Date(checkIn);
-            const end = new Date(checkOut);
-
-            const nights = Math.ceil(
-                (end - start) / (1000 * 60 * 60 * 24)
-            );
-
-            const total = nights * Number(room.price);
-
-            // Save booking to Supabase
-            const { data, error } = await supabase
-                .from("bookings")
-                .insert([
-                    {
-                        guest_name: guestName,
-                        phone: phone,
-                        room_id: room.id,
-                        check_in: checkIn,
-                        check_out: checkOut,
-                        total: total,
-                        status: "pending"
-                    }
-                ])
-                .select();
-
-            if (error) {
-                console.error(error);
-                alert("Booking failed. Please try again.");
-                return;
-            }
-
-            alert(
-                "Booking successful!\\n\\n" +
-                "Room: " + room.room_number + "\\n" +
-                "Nights: " + nights + "\\n" +
-                "Total: K" + total
-            );
-
-            bookingForm.reset();
-
-        } catch (error) {
-            console.error(error);
-            alert("Something went wrong. Please try again.");
-        }
-    });
-}
-</script></body>
+</body>
 </html>
