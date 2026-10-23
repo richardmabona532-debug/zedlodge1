@@ -882,7 +882,24 @@ nav a {
 
     </button>
 
-</form>
+</form><div id="bookingConfirmation" class="booking-confirmation" style="display: none;">
+    <h3>✅ Booking Request Received</h3>
+
+    <p>Thank you for choosing UrbanLodge!</p>
+
+    <div class="confirmation-details">
+        <p><strong>Room:</strong> <span id="confirmRoom"></span></p>
+        <p><strong>Check-in:</strong> <span id="confirmCheckIn"></span></p>
+        <p><strong>Check-out:</strong> <span id="confirmCheckOut"></span></p>
+        <p><strong>Estimated total:</strong> K<span id="confirmTotal"></span></p>
+    </div>
+
+    <p>We will contact you shortly to confirm your booking.</p>
+
+    <button type="button" onclick="closeConfirmation()">
+        Close
+    </button>
+</div>
 
 </div>
 
