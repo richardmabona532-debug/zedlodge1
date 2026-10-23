@@ -1181,17 +1181,15 @@ document
 
             return;
         }
-
-
-        alert(
-            "Booking request received!\n\n" +
-            "Room: " + roomType + "\n" +
-            "Check-in: " + arrival + "\n" +
-            "Check-out: " + departure + "\n" +
-            "Estimated total: K" +
-            estimatedTotal.toLocaleString()
-        );
-
+alert(
+    "Booking request received!\n\n" +
+    "Room: " + roomType + "\n" +
+    "Check-in: " + arrival + "\n" +
+    "Check-out: " + departure + "\n" +
+    "Estimated total: K" +
+    estimatedTotal.toLocaleString() +
+    "\n\nWe will contact you shortly to confirm your booking."
+);
 
         document
         .getElementById("bookingForm")
