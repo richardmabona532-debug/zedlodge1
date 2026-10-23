@@ -1199,14 +1199,19 @@ document
             return;
         }
 alert(
-    "Booking request received!\n\n" +
-    "Room: " + roomType + "\n" +
-    "Check-in: " + arrival + "\n" +
-    "Check-out: " + departure + "\n" +
-    "Estimated total: K" +
-    estimatedTotal.toLocaleString() +
-    "\n\nWe will contact you shortly to confirm your booking."
-);
+    document.getElementById("confirmRoom").textContent = roomType;
+document.getElementById("confirmCheckIn").textContent = arrival;
+document.getElementById("confirmCheckOut").textContent = departure;
+document.getElementById("confirmTotal").textContent =
+    estimatedTotal.toLocaleString();
+
+document.getElementById("bookingConfirmation").style.display = "block";
+
+document.getElementById("bookingForm").style.display = "none";
+);function closeConfirmation() {
+    document.getElementById("bookingConfirmation").style.display = "none";
+    document.getElementById("bookingForm").style.display = "block";
+}
 
         document
         .getElementById("bookingForm")
