@@ -1182,6 +1182,27 @@ document
 
 });
 
+</script><script>
+document.querySelector(".hero").style.backgroundImage =
+'linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.65)), url("assets/img-20210930-wa0010.jpg")';
+
+const lodgePhotos = [
+    "assets/img-20210930-wa0022.jpg",
+    "assets/img-20210930-wa0030.jpg",
+    "assets/img-20210930-wa0035.jpg",
+    "assets/img-20210930-wa0010.jpg",
+    "assets/img-20210930-wa0022.jpg",
+    "assets/img-20210930-wa0030.jpg",
+    "assets/img-20210930-wa0035.jpg",
+    "assets/img-20210930-wa0010.jpg",
+    "assets/img-20210930-wa0022.jpg"
+];
+
+document.querySelectorAll("img").forEach((img, index) => {
+    if (lodgePhotos[index]) {
+        img.src = lodgePhotos[index];
+    }
+});
 </script>
 
 </body>
