@@ -508,7 +508,29 @@ async function loadBookings() {
   `).join("");
 }
 
-loadBookings();
+loadBookings();async function updateBooking(bookingId, newStatus) {
+
+  const { error } = await supabaseClient
+    .from("bookings")
+    .update({
+      status: newStatus
+    })
+    .eq("id", bookingId);
+
+  if (error) {
+    alert("Could not update booking: " + error.message);
+    console.error(error);
+    return;
+  }
+
+  alert(
+    newStatus === "confirmed"
+      ? "✅ Booking confirmed!"
+      : "❌ Booking cancelled!"
+  );
+
+  loadBookings();
+}
 </script>
 </body>
 </html>
