@@ -1265,18 +1265,18 @@ document
             return;
         }
 alert(
-    document.getElementById("confirmRoom").textContent = roomType;
+document.getElementById("confirmRoom").textContent = roomType;
+
 document.getElementById("confirmCheckIn").textContent = arrival;
+
 document.getElementById("confirmCheckOut").textContent = departure;
+
 document.getElementById("confirmTotal").textContent =
     estimatedTotal.toLocaleString();
 
 document.getElementById("bookingConfirmation").style.display = "block";
 
 document.getElementById("bookingForm").style.display = "none";
-);function closeConfirmation() {
-    document.getElementById("bookingConfirmation").style.display = "none";
-    document.getElementById("bookingForm").style.display = "block";
 }
 
         document
