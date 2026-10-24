@@ -1435,7 +1435,53 @@ bookingForm.addEventListener("submit", async event => {
 
   submitBooking.disabled = true;
   submitBooking.textContent = "Checking availability...";
+    // CHECK AVAILABILITY BEFORE SUBMITTING
+    const {
+        data: availability,
+        error: availabilityError
+    } = await supabaseClient.rpc(
+        "get_room_availability",
+        {
+            p_check_in: arrival,
+            p_check_out: departure
+        }
+    );
 
+    if (availabilityError) {
+        console.error(
+            "Availability error:",
+            availabilityError
+        );
+
+        showMessage(
+            "We couldn't check room availability. Please try again."
+        );
+
+        submitBooking.disabled = false;
+        submitBooking.textContent = "Book Now";
+
+        return;
+    }
+
+    const roomAvailable =
+        availability &&
+        availability.some(room =>
+            room.room_type === selectedRoom &&
+            room.status.toLowerCase() === "available" &&
+            room.is_booked === false
+        );
+
+    if (!roomAvailable) {
+
+        showMessage(
+            "Sorry, that room type is not available for your selected dates."
+        );
+
+        submitBooking.disabled = false;
+        submitBooking.textContent = "Book Now";
+
+        return;
+    }
   try {
     const { data, error } = await supabaseClient.rpc(
       "create_booking",
