@@ -1116,7 +1116,13 @@ function escapeHTML(value) {
 /* =========================
    CHECK EXISTING SESSION
 ========================= */
-
+function showBookingNotification(count) {
+    alert(
+        count === 1
+            ? "🔔 New booking received!"
+            : `🔔 ${count} new bookings received!`
+    );
+}
 async function checkSession() {
 
     const { data } =
