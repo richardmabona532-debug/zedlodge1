@@ -1118,7 +1118,14 @@ async function checkSession() {
 ========================= */
 
 checkSession();
+// AUTO REFRESH DASHBOARD
+setInterval(async () => {
+    const { data } = await supabaseClient.auth.getSession();
 
+    if (data.session) {
+        await loadDashboard();
+    }
+}, 15000);
 </script>
 
 </body>
