@@ -563,3 +563,549 @@ th {
     </main>
 
 </div>
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://tkwypycumahtmbzaqrtv.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_yndmKJLn7rPZEpVdMuA1Og_UDRU_pE6";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let rooms = [];
+let bookings = [];
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    message.textContent = "";
+
+    if (!email || !password) {
+
+        message.textContent =
+            "Please enter your email and password.";
+
+        return;
+    }
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+    if (error) {
+
+        message.textContent =
+            error.message;
+
+        return;
+    }
+
+    showApp(data.session);
+
+}
+
+
+/* =========================
+   SHOW DASHBOARD
+========================= */
+
+function showApp(session) {
+
+    if (!session) return;
+
+    document.getElementById("loginScreen").style.display =
+        "none";
+
+    document.getElementById("app").style.display =
+        "block";
+
+    loadDashboard();
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("app").style.display =
+        "none";
+
+    document.getElementById("loginScreen").style.display =
+        "grid";
+
+}
+
+
+/* =========================
+   LOAD DASHBOARD
+========================= */
+
+async function loadDashboard() {
+
+    await loadRooms();
+
+    await loadBookings();
+
+    updateStats();
+
+}
+
+
+/* =========================
+   LOAD ROOMS
+========================= */
+
+async function loadRooms() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("rooms")
+            .select(
+                "id, room_number, room_type, price, status"
+            )
+            .order("id");
+
+    if (error) {
+
+        console.error(error);
+
+        document.getElementById("roomGrid").innerHTML =
+            "<p>Unable to load rooms.</p>";
+
+        return;
+    }
+
+    rooms = data || [];
+
+    renderRooms();
+
+}
+
+
+/* =========================
+   RENDER ROOMS
+========================= */
+
+function renderRooms() {
+
+    const container =
+        document.getElementById("roomGrid");
+
+    if (!rooms.length) {
+
+        container.innerHTML =
+            "<p>No rooms found.</p>";
+
+        return;
+    }
+
+    container.innerHTML =
+        rooms.map(room => `
+
+            <div class="room">
+
+                <h3>
+                    Room ${room.room_number}
+                </h3>
+
+                <p>
+                    ${room.room_type}
+                    <br>
+                    K${room.price} / night
+                </p>
+
+                <span class="status ${room.status}">
+                    ${room.status}
+                </span>
+
+                <br><br>
+
+                <select
+                    onchange="changeRoomStatus(
+                        ${room.id},
+                        this.value
+                    )"
+                >
+
+                    <option value="available"
+                        ${room.status === "available" ? "selected" : ""}>
+                        Available
+                    </option>
+
+                    <option value="occupied"
+                        ${room.status === "occupied" ? "selected" : ""}>
+                        Occupied
+                    </option>
+
+                    <option value="cleaning"
+                        ${room.status === "cleaning" ? "selected" : ""}>
+                        Cleaning
+                    </option>
+
+                </select>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* =========================
+   CHANGE ROOM STATUS
+========================= */
+
+async function changeRoomStatus(id, status) {
+
+    const { error } =
+        await supabaseClient
+            .from("rooms")
+            .update({ status })
+            .eq("id", id);
+
+    if (error) {
+
+        alert(
+            "Could not update room: " +
+            error.message
+        );
+
+        return;
+    }
+
+    await loadRooms();
+
+    updateStats();
+
+}
+
+
+/* =========================
+   LOAD BOOKINGS
+========================= */
+
+async function loadBookings() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("bookings")
+            .select(
+                "id, guest_name, phone, room_id, check_in, check_out, total, status, created_at"
+            )
+            .order(
+                "created_at",
+                { ascending: false }
+            );
+
+    if (error) {
+
+        console.error(error);
+
+        document.getElementById("bookingTable").innerHTML = `
+            <tr>
+                <td colspan="8">
+                    Unable to load bookings.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    bookings = data || [];
+
+    renderBookings();
+
+}
+
+
+/* =========================
+   RENDER BOOKINGS
+========================= */
+
+function renderBookings() {
+
+    const table =
+        document.getElementById("bookingTable");
+
+    const search =
+        document.getElementById("bookingSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+    let filtered =
+        bookings.filter(booking => {
+
+            const text =
+                `${booking.guest_name} ${booking.phone}`
+                    .toLowerCase();
+
+            return text.includes(search);
+
+        });
+
+
+    if (!filtered.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    No bookings found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    table.innerHTML =
+        filtered.map(booking => {
+
+            const room =
+                rooms.find(
+                    r => r.id === booking.room_id
+                );
+
+            const roomNumber =
+                room
+                    ? room.room_number
+                    : "Unknown";
+
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${escapeHTML(
+                            booking.guest_name
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            booking.phone
+                        )}
+                    </td>
+
+                    <td>
+                        Room ${roomNumber}
+                    </td>
+
+                    <td>
+                        ${booking.check_in}
+                    </td>
+
+                    <td>
+                        ${booking.check_out}
+                    </td>
+
+                    <td>
+                        K${booking.total}
+                    </td>
+
+                    <td>
+
+                        <span class="status ${booking.status}">
+                            ${booking.status}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            ${
+                                booking.status === "pending"
+                                ? `
+                                    <button
+                                        class="small confirm"
+                                        onclick="updateBooking(
+                                            ${booking.id},
+                                            'confirmed'
+                                        )"
+                                    >
+                                        Confirm
+                                    </button>
+
+                                    <button
+                                        class="small cancel"
+                                        onclick="updateBooking(
+                                            ${booking.id},
+                                            'cancelled'
+                                        )"
+                                    >
+                                        Cancel
+                                    </button>
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================
+   UPDATE BOOKING
+========================= */
+
+async function updateBooking(id, status) {
+
+    const { error } =
+        await supabaseClient
+            .from("bookings")
+            .update({ status })
+            .eq("id", id);
+
+    if (error) {
+
+        alert(
+            "Could not update booking: " +
+            error.message
+        );
+
+        return;
+    }
+
+    await loadBookings();
+
+    updateStats();
+
+}
+
+
+/* =========================
+   UPDATE STATISTICS
+========================= */
+
+function updateStats() {
+
+    document.getElementById("totalRooms")
+        .textContent =
+        rooms.length;
+
+
+    document.getElementById("availableRooms")
+        .textContent =
+        rooms.filter(
+            r => r.status === "available"
+        ).length;
+
+
+    document.getElementById("occupiedRooms")
+        .textContent =
+        rooms.filter(
+            r => r.status === "occupied"
+        ).length;
+
+
+    document.getElementById("pendingBookings")
+        .textContent =
+        bookings.filter(
+            b => b.status === "pending"
+        ).length;
+
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    document.getElementById("todayArrivals")
+        .textContent =
+        bookings.filter(
+            b =>
+                b.check_in === today &&
+                b.status !== "cancelled"
+        ).length;
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   CHECK EXISTING SESSION
+========================= */
+
+async function checkSession() {
+
+    const { data } =
+        await supabaseClient.auth.getSession();
+
+    if (data.session) {
+
+        showApp(data.session);
+
+    }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+checkSession();
+
+</script>
+
+</body>
+</html>
