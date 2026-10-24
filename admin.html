@@ -1049,7 +1049,18 @@ function updateStats() {
         bookings.filter(
             b => b.status === "pending"
         ).length;
+const confirmedRevenue =
+    bookings
+        .filter(b => b.status === "confirmed")
+        .reduce(
+            (total, booking) =>
+                total + Number(booking.total || 0),
+            0
+        );
 
+document.getElementById("confirmedRevenue")
+    .textContent =
+    "K" + confirmedRevenue.toLocaleString();
 
     const today =
         new Date()
