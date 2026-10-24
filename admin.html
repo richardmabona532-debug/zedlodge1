@@ -378,3 +378,188 @@ th {
 </head>
 
 <body>
+<div class="login-wrap" id="loginScreen">
+
+    <div class="login-card">
+
+        <h1>Urban Lodge</h1>
+
+        <p>Admin Dashboard Login</p>
+
+        <div class="field">
+            <label>Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Admin email"
+            >
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+            >
+        </div>
+
+        <button onclick="login()" style="width:100%;">
+            Login
+        </button>
+
+        <div class="login-message" id="loginMessage"></div>
+
+    </div>
+
+</div>
+
+
+<div class="app" id="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Urban<span>Lodge</span>
+        </div>
+
+        <nav class="menu">
+
+            <a href="#dashboard" class="active">
+                Dashboard
+            </a>
+
+            <a href="#rooms">
+                Rooms
+            </a>
+
+            <a href="#bookings">
+                Bookings
+            </a>
+
+            <a href="#" onclick="logout()">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Manage Urban Lodge</p>
+            </div>
+
+            <div class="admin">
+                Admin
+            </div>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="card">
+                <h3>Total Rooms</h3>
+                <strong id="totalRooms">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Available</h3>
+                <strong id="availableRooms">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Occupied</h3>
+                <strong id="occupiedRooms">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Pending Bookings</h3>
+                <strong id="pendingBookings">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Today's Arrivals</h3>
+                <strong id="todayArrivals">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="section" id="rooms">
+
+            <h2>Rooms</h2>
+
+            <div class="room-grid" id="roomGrid">
+
+                <p>Loading rooms...</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="section" id="bookings">
+
+            <div class="toolbar">
+
+                <h2>Bookings</h2>
+
+                <input
+                    type="text"
+                    id="bookingSearch"
+                    placeholder="Search guest or phone..."
+                    oninput="renderBookings()"
+                >
+
+            </div>
+
+            <div class="notice">
+                New bookings will appear here automatically after they are
+                submitted from the website.
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Guest</th>
+                            <th>Phone</th>
+                            <th>Room</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="bookingTable">
+
+                        <tr>
+                            <td colspan="8">
+                                Loading bookings...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
