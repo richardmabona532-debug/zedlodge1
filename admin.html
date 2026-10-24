@@ -587,6 +587,8 @@ const supabaseClient =
 
 let rooms = [];
 let bookings = [];
+let knownBookingIds = new Set();
+let firstBookingLoad = true;
 
 
 /* =========================
@@ -845,7 +847,23 @@ async function loadBookings() {
         return;
     }
 
-    bookings = data || [];
+    bookings = data || [];// CHECK FOR NEW BOOKINGS
+const currentBookingIds = new Set(
+    bookings.map(booking => booking.id)
+);
+
+if (!firstBookingLoad) {
+    const newBookings = bookings.filter(
+        booking => !knownBookingIds.has(booking.id)
+    );
+
+    if (newBookings.length > 0) {
+        showBookingNotification(newBookings.length);
+    }
+}
+
+knownBookingIds = currentBookingIds;
+firstBookingLoad = false;
 
     renderBookings();
 
