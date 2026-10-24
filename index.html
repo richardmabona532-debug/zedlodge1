@@ -1251,155 +1251,276 @@
   </div>
 
 </footer>
-
-
 <!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
+"use strict";
 
-  "use strict";
+// SUPABASE CONNECTION
+const SUPABASE_URL =
+  "https://tkwypycumahtmbzaqrtv.supabase.co";
 
+const SUPABASE_KEY =
+  "sb_publishable_yndmKJLn7rPZEpVdMuA1Og_UDRU_pE6";
 
-  /*
-    SUPABASE CONNECTION
-  */
+const supabaseClient = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+  : null;
 
-  const SUPABASE_URL =
-    "https://tkwypycumahtmbzaqrtv.supabase.co";
+// ROOM PRICES
+const PRICES = {
+  "Super Executive Room": 450,
+  "Executive Double Room": 350,
+  "Standard Double Room": 250,
+  "Twin Double Room": 200
+};
 
+// PAGE ELEMENTS
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-  const SUPABASE_KEY =
-    "sb_publishable_yndmKJLn7rPZEpVdMuA1Og_UDRU_pE6";
+const bookingForm = document.getElementById("bookingForm");
+const confirmation = document.getElementById("bookingConfirmation");
 
+const roomType = document.getElementById("roomType");
+const checkIn = document.getElementById("checkIn");
+const checkOut = document.getElementById("checkOut");
+const total = document.getElementById("total");
 
-  const supabaseClient =
-    window.supabase
-      ? window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY
-        )
-      : null;
+const formMessage = document.getElementById("formMessage");
+const submitBooking = document.getElementById("submitBooking");
+const newBookingBtn = document.getElementById("newBookingBtn");
 
+// FOOTER YEAR
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
-  /*
-    ROOM PRICES
-  */
+// DATE HELPERS
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  const PRICES = {
+  return `${year}-${month}-${day}`;
+}
 
-    "Super Executive Room": 450,
+function shiftDate(dateString, days) {
+  const [year, month, day] = dateString.split("-").map(Number);
 
-    "Executive Double Room": 350,
+  const date = new Date(year, month - 1, day);
+  date.setDate(date.getDate() + days);
 
-    "Standard Double Room": 250,
+  return getLocalDateString(date);
+}
 
-    "Twin Double Room": 200
+function countNights(start, end) {
+  const startTime = Date.parse(start + "T00:00:00Z");
+  const endTime = Date.parse(end + "T00:00:00Z");
 
-  };
+  return (endTime - startTime) / 86400000;
+}
 
+// SET DATE LIMITS
+const today = getLocalDateString();
 
-  /*
-    GET ELEMENTS
-  */
+checkIn.min = today;
+checkOut.min = today;
 
-  const menuBtn =
-    document.getElementById("menuBtn");
+checkIn.addEventListener("change", () => {
+  checkOut.min = checkIn.value
+    ? shiftDate(checkIn.value, 1)
+    : today;
 
-
-  const navLinks =
-    document.getElementById("navLinks");
-
-
-  const bookingForm =
-    document.getElementById("bookingForm");
-
-
-  const confirmation =
-    document.getElementById(
-      "bookingConfirmation"
-    );
-
-
-  const roomType =
-    document.getElementById("roomType");
-
-
-  const checkIn =
-    document.getElementById("checkIn");
-
-
-  const checkOut =
-    document.getElementById("checkOut");
-
-
-  const total =
-    document.getElementById("total");
-
-
-  const formMessage =
-    document.getElementById(
-      "formMessage"
-    );
-
-
-  const submitBooking =
-    document.getElementById(
-      "submitBooking"
-    );
-
-
-  const newBookingBtn =
-    document.getElementById(
-      "newBookingBtn"
-    );
-
-
-  /*
-    FOOTER YEAR
-  */
-
-  document.getElementById("year")
-    .textContent =
-    new Date().getFullYear();
-
-
-  /*
-    DATE FUNCTION
-  */
-
-  function getLocalDateString(
-    date = new Date()
-  ) {
-
-    const year =
-      date.getFullYear();
-
-    const month =
-      String(
-        date.getMonth() + 1
-      ).padStart(2, "0");
-
-    const day =
-      String(
-        date.getDate()
-      ).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-
+  if (checkOut.value && checkOut.value <= checkIn.value) {
+    checkOut.value = "";
   }
 
+  updateTotal();
+});
 
-  /*
-    CONVERT DATE
-  */
+// ESTIMATED PRICE
+function updateTotal() {
+  const selectedRoom = roomType.value;
+  const arrival = checkIn.value;
+  const departure = checkOut.value;
 
-  function dateToUTC(
-    dateString
+  if (
+    !selectedRoom ||
+    !arrival ||
+    !departure ||
+    departure <= arrival
   ) {
+    total.textContent = "K0";
+    return;
+  }
 
-    const parts =
-      dateString
-        .split("-")
+  const nights = countNights(arrival, departure);
+  const price = PRICES[selectedRoom];
+
+  if (!Number.isFinite(nights) || nights <= 0 || !price) {
+    total.textContent = "K0";
+    return;
+  }
+
+  total.textContent = `K${(nights * price).toFixed(2)}`;
+}
+
+roomType.addEventListener("change", updateTotal);
+checkIn.addEventListener("change", updateTotal);
+checkOut.addEventListener("change", updateTotal);
+
+// MOBILE MENU
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+  });
+
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+    });
+  });
+}
+
+// ROOM BOOKING BUTTONS
+document.querySelectorAll(".room-book-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    roomType.value = button.dataset.room;
+    updateTotal();
+
+    document.getElementById("booking").scrollIntoView({
+      behavior: "smooth"
+    });
+  });
+});
+
+// DISPLAY MESSAGES
+function showMessage(message) {
+  formMessage.textContent = message;
+  formMessage.style.color = "#b42318";
+}
+
+// SUBMIT A BOOKING
+bookingForm.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  formMessage.textContent = "";
+
+  const guestName =
+    document.getElementById("guestName").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const selectedRoom = roomType.value;
+  const arrival = checkIn.value;
+  const departure = checkOut.value;
+
+  if (!guestName || !phone || !selectedRoom ||
+      !arrival || !departure) {
+    showMessage("Please complete all the booking fields.");
+    return;
+  }
+
+  if (departure <= arrival) {
+    showMessage("Check-out must be after check-in.");
+    return;
+  }
+
+  if (!supabaseClient) {
+    showMessage("Connection failed. Please refresh and try again.");
+    return;
+  }
+
+  submitBooking.disabled = true;
+  submitBooking.textContent = "Checking availability...";
+
+  try {
+    const { data, error } = await supabaseClient.rpc(
+      "create_booking",
+      {
+        p_guest_name: guestName,
+        p_phone: phone,
+        p_room_type: selectedRoom,
+        p_check_in: arrival,
+        p_check_out: departure
+      }
+    );
+
+    if (error) {
+      console.error("Booking error:", error);
+
+      if (
+        error.message &&
+        error.message.includes("No room of this type is available")
+      ) {
+        showMessage(
+          "Sorry, this room type is unavailable for those dates. " +
+          "Please choose another room or dates."
+        );
+      } else {
+        showMessage("Booking failed: " + error.message);
+      }
+
+      return;
+    }
+
+    const booking = Array.isArray(data) ? data[0] : data;
+
+    if (!booking) {
+      showMessage("No booking confirmation was returned. Please try again.");
+      return;
+    }
+
+    document.getElementById("confirmGuest").textContent =
+      guestName;
+
+    document.getElementById("confirmRoom").textContent =
+      `${booking.room_type} — Room ${booking.room_number}`;
+
+    document.getElementById("confirmDates").textContent =
+      `${arrival} to ${departure}`;
+
+    document.getElementById("confirmTotal").textContent =
+      `Total: K${Number(booking.total).toFixed(2)}`;
+
+    bookingForm.style.display = "none";
+    confirmation.style.display = "block";
+
+    formMessage.textContent = "";
+
+    confirmation.scrollIntoView({ behavior: "smooth" });
+
+  } catch (error) {
+    console.error("Unexpected booking error:", error);
+
+    showMessage(
+      "Something went wrong. Please try again."
+    );
+
+  } finally {
+    submitBooking.disabled = false;
+    submitBooking.textContent = "Submit Booking";
+  }
+});
+
+// START ANOTHER BOOKING
+newBookingBtn.addEventListener("click", () => {
+  confirmation.style.display = "none";
+  bookingForm.style.display = "grid";
+
+  bookingForm.reset();
+
+  checkIn.min = getLocalDateString();
+  checkOut.min = checkIn.min;
+
+  total.textContent = "K0";
+  formMessage.textContent = "";
+
+  bookingForm.scrollIntoView({ behavior: "smooth" });
+});
+</script>
+
+</body>
+</html>
