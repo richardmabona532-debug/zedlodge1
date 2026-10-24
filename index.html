@@ -1530,7 +1530,41 @@ bookingForm.addEventListener("submit", async event => {
 
     document.getElementById("confirmTotal").textContent =
       `Total: K${Number(booking.total).toFixed(2)}`;
+// Add booking status and booking ID
+let bookingInfo = document.getElementById("bookingInfo");
 
+if (!bookingInfo) {
+    bookingInfo = document.createElement("div");
+    bookingInfo.id = "bookingInfo";
+    bookingInfo.style.marginTop = "15px";
+
+    document.getElementById("confirmTotal")
+        .insertAdjacentElement("afterend", bookingInfo);
+}
+
+bookingInfo.innerHTML = `
+    <p>
+        <strong>Booking ID:</strong>
+        #${booking.booking_id}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        <span style="color: #b7791f;">
+            Pending Confirmation
+        </span>
+    </p>
+
+    <p>
+        ✅ Your booking request has been successfully received.
+    </p>
+
+    <p>
+        We will contact you on
+        <strong>${guestPhone}</strong>
+        to confirm your booking.
+    </p>
+`;
     bookingForm.style.display = "none";
     confirmation.style.display = "block";
 
